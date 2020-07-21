@@ -2,9 +2,11 @@
 
 - name: "Stage 3: stop old postgresql service"
   service: name="{{ postgresql_service_name }}" state=stopped
+  when: postgresql_drop_old_cluster
 
 - name: "Stage 3: remove old postgresql cluster"
   file: path="{{ postgresql_data_dir }}" state=absent
+  when: postgresql_drop_old_cluster
 
 - name: "Stage 3: cluster directory replacement with symlink, check destination directory"
   file:
